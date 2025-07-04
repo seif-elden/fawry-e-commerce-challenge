@@ -154,18 +154,6 @@ Solution: Ensure items are added to cart before checkout
 Debug: Print cart contents using cart.toString()
 ```
 
-## Data Flow
-The e-commerce system processes transactions through a defined workflow from cart creation to checkout completion.
-
-```ascii
-[Customer] -> [Cart]
-     |          |
-     v          v
-[Product Catalog] -> [Shipping Service]
-     |                    |
-     v                    v
-[Checkout Process] -> [Payment Processing]
-```
 
 Key component interactions:
 1. Customer initiates shopping session
@@ -177,4 +165,3 @@ Key component interactions:
 7. Inventory updates reflect purchased quantities
 8. Transaction completes with receipt generation
 ---
-This file was automatically created using a Python script integrated with Amazon Q but no AI was used in the making of the src of this project. 
