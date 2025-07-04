@@ -64,28 +64,69 @@ system.checkout(customer, cart);
 ```
 
 ### More Detailed Examples
-1. Working with expirable products:
+1. Successful Checkout with Mixed Products:
 ```java
-// Create an expirable product with 10 days until expiration
-Products cheese = new ExpirableProducts(
-    100.0,                          // price
-    5,                              // quantity
-    "Cheese",                       // name
-    LocalDate.now().plusDays(10),   // expiry date
-    true,                           // requires shipping
-    0.2                            // weight in kg
-);
-system.addProduct(cheese);
+System.out.println("\nTEST CASE 1: Successful Checkout");
+Cart cart1 = new Cart();
+cart1.addItem(system.getProduct("Cheese"), 2); //
+cart1.addItem(system.getProduct("TV"), 1);  // Changed from 3 to 1 to manage customer balance and make example clearer
+cart1.addItem(system.getProduct("Mobile Scratch Card"), 1); //
+cart1.addItem(system.getProduct("Biscuits"), 1); //
+system.checkout(customer1, cart1);
+System.out.println("\n======================================");
 ```
+![image](https://github.com/user-attachments/assets/0cb49d05-1572-428b-9c9a-df47f71052f9)
 
-2. Processing a mixed cart:
+
+2. Use Case 2: Cart is Empty Error:
 ```java
-Cart cart = new Cart();
-cart.addItem(system.getProduct("Cheese"), 2);
-cart.addItem(system.getProduct("TV"), 1);
-cart.addItem(system.getProduct("Mobile Scratch Card"), 1);
-system.checkout(customer, cart);
+System.out.println("\nTEST CASE 2: Empty Cart Error");
+Cart cart2 = new Cart();
+system.checkout(customer1, cart2); //
+System.out.println("\n======================================");
 ```
+![image](https://github.com/user-attachments/assets/e1776172-fc54-4a0d-9d92-47d5b62e6aee)
+
+3. Use Case 3: Customer's Balance is Insufficient Error
+```java
+System.out.println("\nTEST CASE 3: Insufficient Balance Error");
+Cart cart3 = new Cart();
+cart3.addItem(system.getProduct("TV"), 1); // Total price: 10000.0 + shipping
+system.checkout(customer2, cart3); // Bob only has 150.0
+System.out.println("\n======================================");
+```
+![image](https://github.com/user-attachments/assets/deae51a6-854e-475f-b7e5-e019ac47fe88)
+
+4. Use Case 4: Product is Out of Stock Error
+```java
+System.out.println("\nTEST CASE 4: Out of Stock Error");
+Cart cart4 = new Cart();
+cart4.addItem(system.getProduct("Out of Stock Item"), 1);
+system.checkout(customer1, cart4); //
+System.out.println("\n======================================");
+```
+![image](https://github.com/user-attachments/assets/1cc1beda-6515-40bf-b6fb-6ae629582677)
+
+5. Use Case 5: Product is Expired Error
+```java
+System.out.println("\nTEST CASE 5: Expired Product Error");
+Cart cart5 = new Cart();
+cart5.addItem(system.getProduct("Expired Cheese"), 1);
+system.checkout(customer1, cart5); //
+System.out.println("\n======================================");
+```
+![image](https://github.com/user-attachments/assets/f9dc6ba0-0b6b-41e7-8c8e-8fd6fe089465)
+
+6. Use Case 6: Adding more than available quantity to cart (handled by Cart.addProduct)
+```java
+System.out.println("\nTEST CASE 6: Adding more than available quantity to cart");
+Cart cart6 = new Cart();
+cart6.addItem(system.getProduct("TV"), 5); // Only 1 TV left after first purchase
+system.checkout(customer1, cart6);
+System.out.println("\n======================================");
+```
+![image](https://github.com/user-attachments/assets/794fba23-1e81-4554-ba11-682710b48901)
+
 
 ### Troubleshooting
 Common issues and solutions:
